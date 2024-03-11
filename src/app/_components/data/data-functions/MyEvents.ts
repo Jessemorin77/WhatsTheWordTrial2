@@ -9,3 +9,11 @@ export async function getUserEvents() {
     },
   });
 }
+
+export async function getUserEventWithId(id: number){
+ return db.event.findUnique({
+    where: {
+      id: Number(id),
+    }
+  }) 
+}

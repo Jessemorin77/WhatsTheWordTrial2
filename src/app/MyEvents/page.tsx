@@ -1,43 +1,63 @@
 import { getUserEvents } from '../_components/data/data-functions/MyEvents'
 import Image from "next/image"
 import Link from "next/link"
+import {deleteEvent} from "../_components/data/actions/MyEvents/action"
 
 export default async function MyEvents() {
   const events = await getUserEvents()
   return (
     <div>
+      <Link href="/MyEvents/HostEvent" className="btn">HostEvent</Link>
       <div>
         {events.map((event) => (
           <div>
-            <Link href={`/MyEvents/${event.id}`}>
               <div key={event.id}>
-                <Image
-                  src={event?.image}
-                  width={200}
-                  height={200}
-                  alt="image not found"
-                />
-                <div>
-                  <h1>
-                    Title:
-                    <span>{event.title}</span>
-                  </h1>
+                <div className="flex flex-col">
+            <Link href={`/MyEvents/${event.id}`}>
+                  <div className="relative w-full h-72">
+                    <Image
+                      src={event.image}
+                      alt={event.title}
+                      layout="fill"
+                      objectFit="cover"
+                      className="rounded-xl"
+                    />
+                  </div>
+                  <div>
+                    <h1>
+                      Title:
+                      <span>{event.title}</span>
+                    </h1>
+                  </div>
+                  <div>{event.description}</div>
+                  <div>{event.status}</div>
+            </Link>
+                  <div className="flex justify-center">
+                    <form action={deleteEvent}>
+                      <button
+                        className="mr-5 text-black bg-white p-1 rounded-xl" 
+                       type="submit"
+                      >
+                        Delete Event
+                      </button>
+                      <input name="id" value={event.id} type="hidden"/>
+                    </form>
+                    <Link
+                      className="mr-5 text-black bg-white p-1 rounded-xl"
+                      href={`/MyEvents/EditEvent/${event.id}`}
+                    >
+                      Edit Event
+                    </Link> 
+                  </div>
                 </div>
-                <div>{event.description}</div>
-                <div>{event.time}</div>
-                <div>{event.location}</div>
-                <div>{event.eventType}</div>
-                <div>{event.cityState}</div>
-                <div>{event.status}</div>
-                <div>{event.school}</div>
               </div>
 
-            </Link>
 
           </div>
-        ))}
+        ))
+        }
 
-      </div>
-    </div>
+      </div >
+    </div >
   )
 }
