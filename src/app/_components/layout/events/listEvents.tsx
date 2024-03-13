@@ -1,9 +1,12 @@
 import Image from "next/image";
 import Link from 'next/link'
 
-export default function listEvents(school: string, events) {
+export default function listEvents(school: string, events, location: string) {
   return (
     <div>
+      <div>
+        Events in {location}
+      </div>
       {events.length > 0 && (
         <ul className="mt-24">
           {events.map((event, index) => (

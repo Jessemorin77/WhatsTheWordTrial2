@@ -15,7 +15,7 @@ export default function HomePage() {
       </div>
         {searchEvents(handleFormSubmit, setLocation, setSchool, location)}
         {error && <p className="text-red-300">{error}</p>}
-        {listEvents(school, events)}
+        {listEvents(school, events, location)}
       </div>
   )
 }
