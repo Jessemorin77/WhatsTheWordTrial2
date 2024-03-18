@@ -1,7 +1,8 @@
 import { fetchEvent } from "../_components/data/fetch/getEventById"
 import Image from "next/image";
 import { getEvent } from "./_data"
-import { sendChat } from "./_action"
+import { sendChat, createRating } from "./_action"
+
 
 export default async function event({ params }: { params: { id: number } }) {
   const id = params.id
@@ -28,22 +29,22 @@ export default async function event({ params }: { params: { id: number } }) {
         <h1>Host: {event.host ? event.host.name : 'Unknown'}</h1>
         <h1 className="mt-5">Description: {event.description}</h1>
       </div>
-      <div>
+      <div className="mt-20 ml-10">
         <h1>Chats:</h1>
         {event.chats && event.chats.length > 0 ? (
           event.chats.map((chat, index) => (
-            <p key={index} className="">{chat.content}</p>
+            <p key={index} className="ml-5 mt-5">Message: {chat.content}</p>
           ))
         ) : (
           <p>No chats available for this event.</p>
         )}
-        <form action={sendChat}>
-          <input type="text" name="chat" placeholder="sent chat" />
+        <form action={sendChat} className="flex justify-center mt-5">
+          <input type="text" name="chat" placeholder="sent chat" className="input" />
           <input type="hidden" name="id" value={event.id} />
-          <button type="submit">Submit</button>
+          <button type="submit" className="btn ml-5">Submit</button>
         </form>
       </div>
-      <div>
+      <div className="mt-10">
         <h1>Reviews: </h1>
         {event?.reviews && event.reviews.length > 0 ? (
           event.reviews.map((review, index) => (
@@ -58,6 +59,15 @@ export default async function event({ params }: { params: { id: number } }) {
         ) : (
           <p>No chats available for this event.</p>
         )}
+        <div>
+          <form action={createRating}>
+            <p>Write a review</p>
+            <input type="text" name="content" placeholder="content" className="input"/> 
+            <input type="number" name="rating" placeholder="rating" className="input"/>
+            <input type="hidden" name="eventId" value={event.id}/>
+            <button className="btn">Submit</button>
+          </form>
+        </div>
       </div>
     </div>
   )
