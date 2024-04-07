@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { db } from '~/server/db';
 
 export async function POST(req: NextRequest) {
+  console.log("events endpoint hit")
     try {
         
         const requestData = await req.json(); // Using NextRequest.json() to parse the body

@@ -1,5 +1,6 @@
-import { AutoComplete } from "../../ui/AutoComplete";
-import { SchoolModel } from "../../ui/SchoolModel";
+"use client"
+import { AutoComplete } from "~/app/_components/ui/AutoComplete";
+import { SchoolModel } from "~/app/_components/ui/SchoolModel";
 
 export default function searchEvents(handleFormSubmit, setLocation, setSchool, location, school) {
   return (
@@ -44,3 +45,4 @@ export default function searchEvents(handleFormSubmit, setLocation, setSchool, l
 
   )
 }
+

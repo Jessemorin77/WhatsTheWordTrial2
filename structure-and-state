@@ -1,0 +1,37 @@
+what we need to do is to:
+  Redesign the home page
+
+  the home page needs 1 of either 2 inputs, we can do this, the end goal is that the user needs to see events in their area, or they need to find an event. 
+  1.) events in area
+    -get location
+    -set location
+
+    State: check for location and render events
+    or 
+    render suggested events
+
+  2.) Search events
+    how events can be sorted are by location, title, eventType, status, school
+
+  Events:
+    Route Called
+    GetLocation
+    true: query events in location
+    false: query events
+
+    Search by: Location, name, title, eventType, status, school
+
+Structure:
+  Component:
+    Search Form:
+      Data: location
+
+      client:Form -> action
+      server:
+        action:
+          Data: inputs
+          Return: actions
+
+  Component: 
+    ListEvent
+    

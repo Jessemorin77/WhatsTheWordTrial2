@@ -7,14 +7,13 @@ type State = {
 };
 
 export async function editEvent(prevState: State, formData: FormData) {
-  // Assuming the ID is an integer; adjust accordingly if your ID type is different
+
   const eventId = parseInt(formData.get("id") as string);
 
-  // Extracting form data and initializing the update object
-  const fieldsToUpdate: any = {}; // Use an appropriate type instead of 'any' if possible
+  const fieldsToUpdate: any = {};
 
-  // Conditionally adding fields to the update object if they exist
   const formFields = ["url", "title", "description", "location", "eventType", "cityState", "status", "school"];
+
   formFields.forEach(field => {
     const value = formData.get(field);
     if (value) {
@@ -22,7 +21,7 @@ export async function editEvent(prevState: State, formData: FormData) {
     }
   });
 
-  //if  no fields to update
+
   if (Object.keys(fieldsToUpdate).length === 0) {
     console.error("No fields provided for update");
     return{
@@ -38,18 +37,13 @@ export async function editEvent(prevState: State, formData: FormData) {
 
     console.log("PINGGGGGG")
     //manage state
-  return{
-    message: 'Events Updated'
-  }
   } catch (error) {
     // Log and handle error appropriately
     console.error("Failed to update event:", error);
-  return{
-    message: 'Error Updating Event'
-  }
-
   }
   //
+  return{
+    message: 'Events Updated'
+  }
   redirect(`/MyEvents/EditEvent/${eventId}`)
 }
-

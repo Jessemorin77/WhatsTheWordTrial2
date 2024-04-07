@@ -13,7 +13,7 @@ export default function HomePage() {
         <h1 className="text-4xl">What's The Word</h1>
         <h3>find "events" in your area</h3>
       </div>
-        {searchEvents(handleFormSubmit, setLocation, setSchool, location)}
+        {searchEvents(handleFormSubmit, setLocation, setSchool, location, school)}
         {error && <p className="text-red-300">{error}</p>}
         {listEvents(school, events, location)}
       </div>

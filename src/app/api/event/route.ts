@@ -2,10 +2,9 @@ import { NextRequest, NextResponse } from 'next/server';
 import { db } from '~/server/db';
 
 export async function POST(req: NextRequest) {
-  console.log("pingggg")
+  console.log("endpoint hit")
   try {
     const requestData = await req.json();
-    console.log("$$$api: ", requestData)
     const event = await db.event.findUnique({
       where: {
         id: Number(requestData)
@@ -19,9 +18,8 @@ export async function POST(req: NextRequest) {
       reviews: true,
         chats: true,
       },
-
-
     })
+    console.log("event from [id]: ", event)
     return NextResponse.json(event)
   } catch (error) {
     console.error('Failed to fetch event:', error);

@@ -6,6 +6,7 @@ import { UploadButton } from "~/app/_components/utils/uploadthing";
 import { env } from "~/env";
 import { useFormState } from 'react-dom'
 import { createEventAction, EventErrorState } from "../../_components/data/actions/HostEvent/action"
+import {useRouter} from "next/navigation"
 
 export default function CreateEvent() {
   const [formState, wrappedAction] = useFormState(createEventAction, {
@@ -15,7 +16,13 @@ export default function CreateEvent() {
   const [cityState, setCityState] = useState<string>("")
   const [school, setSchool] = useState<string>("")
   const [imageUrl, setImageUrl] = useState<string>("")
+  
+  const router = useRouter();
 
+  if(formState.error == "submitted"){
+    console.log("Triggered^^^^^^^^^^^^^^")
+    router.push('/MyEvents')  
+  }
   return (
     <form action={wrappedAction}
       className="flex flex-col items-center"

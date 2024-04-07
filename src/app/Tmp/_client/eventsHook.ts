@@ -1,7 +1,8 @@
+"use client"
 import { useState } from 'react';
-import { fetchEvents } from '../data/fetch/EventService';
+import { fetchEvents } from './fetchEvents';
 
-export function useEventForm(router) {
+export function useEventHook(router) {
   const [location, setLocation] = useState<string>('');
   const [school, setSchool] = useState<string>('');
   const [events, setEvents] = useState([]);
@@ -47,4 +48,5 @@ export function useEventForm(router) {
     handleFormSubmit,
   };
 }
+
 

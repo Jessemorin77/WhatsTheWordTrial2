@@ -7,10 +7,10 @@ export async function fetchEvent(id: number) {
     },
     body: JSON.stringify(id),
   });
-  
+
   if (!response.ok){
     throw new Error('Failed to fetch event');
-    console.log(response)
-  } 
-  return response.json();
+  }
+  console.log("sent from fetch")
+  return response.json()
 }
