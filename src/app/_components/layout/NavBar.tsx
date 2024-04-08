@@ -47,7 +47,7 @@ export default async function NavBar({
             <ul className="menu menu-horizontal">
               {/* Navbar menu content here */}
               <li>
-                <a href="/">Find Events</a>
+                <a href="/FindEvents">Find Events</a>
               </li>
               <li>
                 <a href="/MyEvents">My Events</a>
@@ -72,7 +72,7 @@ export default async function NavBar({
         <ul className="menu min-h-full w-80 bg-base-200 p-4">
           {/* Sidebar content here */}
           <li>
-            <a className="text-lg" href="/">
+            <a className="text-lg" href="/FindEvents">
               Find Events
             </a>
           </li>
