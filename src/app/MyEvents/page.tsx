@@ -15,13 +15,24 @@ export default async function MyEvents() {
                 <div className="flex flex-col">
             <Link href={`/MyEvents/${event.id}`}>
                   <div className="relative w-full h-72">
-                    <Image
-                      src={event.image}
-                      alt={event.title}
-                      layout="fill"
-                      objectFit="cover"
-                      className="rounded-xl"
-                    />
+                    {/*If No Image display Nothing*/}
+                    {event.image ? 
+                      <div>
+                        <Image
+                          src={event.image}
+                          alt={event.title}
+                          layout="fill"
+                          objectFit="cover"
+                          className="rounded-xl"
+                        />
+                      </div>
+
+                      :
+
+                      <div>
+
+                      </div>
+                    }
                   </div>
                   <div>
                     <h1>

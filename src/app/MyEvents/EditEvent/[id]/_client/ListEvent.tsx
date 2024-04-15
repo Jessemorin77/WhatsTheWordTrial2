@@ -8,13 +8,24 @@ export function ListEvent({event}){
           <h1 className="text-4xl">Edit Event</h1>
         </div>
         <div className="relative w-full h-72 mt-10">
-          <Image
-            src={event.image}
-            alt={event.title}
-            layout="fill"
-            objectFit="cover"
-            className="rounded-xl"
-          />
+        {/*If No Image display Nothing*/}
+        {event?.image ?
+          <div>
+            <Image
+              src={event.image}
+              alt={event.title}
+              layout="fill"
+              objectFit="cover"
+              className="rounded-xl"
+            />
+          </div>
+
+          :
+
+          <div>
+
+          </div>
+        }
         </div>
         <div className="text-2xl my-10">
           <h1>Title: {event.title}</h1>

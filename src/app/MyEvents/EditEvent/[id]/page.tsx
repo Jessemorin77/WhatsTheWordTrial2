@@ -1,16 +1,16 @@
-import { getUserEventWithId } from "~/app/_components/data/data-functions/MyEvents"
-import {ListEvent} from "./_listEvent"
-import {ClientEventForm} from "./ClientEventForm"
+import {getEventById} from "~/data-access/Events"
+import {ListEvent} from "./_client/ListEvent"
+import {EventForm} from "./_client/EventForm/index"
 
 export default async function Edit({ params }: { params: { id: number } }) {
   const id = params.id
   
-  const event = await getUserEventWithId(id)
+  const event = await getEventById(id)
 
   return(
     <div>
       <ListEvent event={event}/>
-      <ClientEventForm event={event}/>
+      <EventForm event={event} id={id}/>
     </div>
 )  
 }

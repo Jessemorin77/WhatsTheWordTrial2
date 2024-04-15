@@ -15,6 +15,7 @@ export default function Events() {
     error,
     handleFormSubmit
   } = useEventHook(router);
+
   return (
     <div>
       {searchEvents(handleFormSubmit, setLocation, setSchool, location, school)}

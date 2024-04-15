@@ -1,19 +1,30 @@
-import {getUserEventWithId} from "../../_components/data/data-functions/MyEvents"
+import { getUserEventWithId } from "../../_components/data/data-functions/MyEvents"
 import Image from "next/image";
 
-export default async function id({params}: {params: {id: number}}){
+export default async function id({ params }: { params: { id: number } }) {
   const id = params.id
   const event = await getUserEventWithId(id)
-  return(
+  return (
     <div className="flex flex-col">
       <div className="relative w-full h-72">
-        <Image
-          src={event?.image}
-          alt={event?.title}
-          layout="fill"
-          objectFit="cover"
-          className="rounded-xl"
-        />
+        {/*If No Image display Nothing*/}
+        {event?.image ?
+          <div>
+            <Image
+              src={event.image}
+              alt={event.title}
+              layout="fill"
+              objectFit="cover"
+              className="rounded-xl"
+            />
+          </div>
+
+          :
+
+          <div>
+
+          </div>
+        }
       </div>
       <div>
         <h1>Title: {event?.title}</h1>
@@ -23,7 +34,7 @@ export default async function id({params}: {params: {id: number}}){
         <h1>Status: {event?.status}</h1>
         <h1>School: {event?.school}</h1>
         <h1>Description: {event?.description}</h1>
-<h1>Host: {event?.host ? event?.host.name : 'Unknown'}</h1>      
+        <h1>Host: {event?.host ? event?.host.name : 'Unknown'}</h1>
 
       </div>
     </div>

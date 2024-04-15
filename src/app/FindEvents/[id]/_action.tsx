@@ -1,6 +1,6 @@
 "use server"
 import { db } from '~/server/db';
-import {redirect} from 'next/navigation'
+import { revalidatePath } from 'next/cache'
 import { getServerAuthSession } from '~/server/auth';
 
 export async function sendChat(formData: FormData){
@@ -12,7 +12,7 @@ export async function sendChat(formData: FormData){
     eventId: Number(id), // Assuming '1' is the ID of the event you want to add a chat to
   },
 });
-  redirect(`/${id}`)
+  revalidatePath(`/${id}`)
 }
 
 export async function createRating(formData: FormData){
@@ -29,5 +29,5 @@ export async function createRating(formData: FormData){
       userId: String(session?.user.id),
   },
 });
-  redirect(`/${id}`)
+  revalidatePath(`/${id}`)
 }

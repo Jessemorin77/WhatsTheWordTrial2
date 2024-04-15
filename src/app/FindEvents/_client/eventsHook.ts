@@ -1,4 +1,4 @@
-"use client"
+'use client';
 import { useState } from 'react';
 import { fetchEvents } from './fetchEvents';
 
@@ -11,8 +11,16 @@ export function useEventHook(router) {
   const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    console.log("HandleFormSubmit: ", location)
-    console.log("School", school)
+    console.log('HandleFormSubmit: ', location);
+    console.log('School', school);
+
+    /*
+     *Possible states
+      State1: Location: str, school: null
+      State2: Location: null, school: str
+      State3: true, true
+      State4: incorrect format
+     * */
 
     if ((location && school) || (!location && !school)) {
       setError('Please fill in exactly one field');
@@ -23,14 +31,13 @@ export function useEventHook(router) {
         const returnedEvents = await fetchEvents(school, location);
 
         if (!returnedEvents) {
-          console.log("No Events Returned")
-          setError("No Events Found")
+          console.log('No Events Returned');
+          setError('No Events Found');
         }
 
         console.log('Returned Events', returnedEvents);
 
         setEvents(returnedEvents);
-
       } catch (error) {
         console.error(error);
         setError('Failed to load events');
@@ -48,5 +55,3 @@ export function useEventHook(router) {
     handleFormSubmit,
   };
 }
-
-

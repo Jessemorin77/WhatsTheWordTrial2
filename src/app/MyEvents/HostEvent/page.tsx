@@ -1,28 +1,23 @@
 'use client'
-import { useState } from "react";
 import Autocomplete from "react-google-autocomplete";
 import { SchoolModel } from "~/app/_components/ui/SchoolModel";
 import { UploadButton } from "~/app/_components/utils/uploadthing";
 import { env } from "~/env";
-import { useFormState } from 'react-dom'
-import { createEventAction, EventErrorState } from "../../_components/data/actions/HostEvent/action"
-import {useRouter} from "next/navigation"
+import { CreateEventHook } from "./Hook";
 
 export default function CreateEvent() {
-  const [formState, wrappedAction] = useFormState(createEventAction, {
-    error: undefined
-  } as EventErrorState)
+  const {
+    wrappedAction,
+    formState,
+    imageUrl,
+    setCityState,
+    cityState,
+    setSchool,
+    school,
+    onClientUploadComplete,
+    onUploadError,
+  } = CreateEventHook()
 
-  const [cityState, setCityState] = useState<string>("")
-  const [school, setSchool] = useState<string>("")
-  const [imageUrl, setImageUrl] = useState<string>("")
-  
-  const router = useRouter();
-
-  if(formState.error == "submitted"){
-    console.log("Triggered^^^^^^^^^^^^^^")
-    router.push('/MyEvents')  
-  }
   return (
     <form action={wrappedAction}
       className="flex flex-col items-center"
@@ -31,34 +26,13 @@ export default function CreateEvent() {
         <h1 className="text-4xl">Host Event</h1>
       </div>
       <div>
-
         <UploadButton
           endpoint="imageUploader"
-          onClientUploadComplete={(res) => {
-            // Do something with the response
-            console.log("Files*****: ", res);
-            console.log("Files*****: ", res);
-            const fileData = res[0];
-
-            if (fileData && fileData.url) {
-              // Now you have the URL of the uploaded file
-              console.log("Uploaded file URL:", fileData.url);
-
-              setImageUrl(fileData.url)
-              console.log(imageUrl)
-              // Do something with the URL, e.g., store it in state or send it to another API
-            } else {
-              console.log("No URL found in the response");
-            }
-            alert("Upload Completed");
-          }}
-          onUploadError={(error: Error) => {
-            // Do something with the error.
-            alert(`ERROR! ${error.message}`);
-          }}
+          onClientUploadComplete={onClientUploadComplete}
+          onUploadError={onUploadError}
         />
-
         <input type="hidden" name="imageUrl" value={imageUrl} />
+        <p>ImageUrl: {imageUrl}</p>
       </div>
       <div className="mb-3">
         <label htmlFor="title" className="block text-lg">

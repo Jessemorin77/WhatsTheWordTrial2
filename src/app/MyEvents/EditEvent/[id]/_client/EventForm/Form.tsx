@@ -1,3 +1,4 @@
+"use client"
 import { UploadButton } from "~/app/_components/utils/uploadthing";
 import Autocomplete from "react-google-autocomplete";
 import { SchoolModel } from "~/app/_components/ui/SchoolModel";

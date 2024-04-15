@@ -1,16 +1,25 @@
 import Image from "next/image";
 
-export function DisplayEvent({event}) {
+export function DisplayEvent({ event }) {
   return (
     <div>
       <div className="relative w-full h-72">
-        <Image
-          src={event.image}
-          alt={event.title}
-          layout="fill"
-          objectFit="cover"
-          className="rounded-xl"
-        />
+        {event.image ?
+          <div>
+            <Image
+              src={event.image}
+              alt={event.title}
+              layout="fill"
+              objectFit="cover"
+              className="rounded-xl"
+            />
+
+          </div>
+          :
+          <div>
+
+          </div>
+        }
       </div>
       <div className="ml-10">
         <h1>Title: {event.title}</h1>

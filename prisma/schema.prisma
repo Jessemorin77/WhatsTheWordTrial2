@@ -87,7 +87,7 @@ model Review {
   rating      Int
   user        User     @relation(fields: [userId], references: [id])
   userId      String
-  event       Event    @relation(fields: [eventId], references: [id])
+  event       Event    @relation(fields: [eventId], references: [id], onDelete: Cascade)
   eventId     Int
   createdAt   DateTime @default(now())
 }
@@ -95,7 +95,7 @@ model Review {
 model Chat {
   id        Int      @id @default(autoincrement())
   content   String
-  event     Event    @relation(fields: [eventId], references: [id])
+  event     Event    @relation(fields: [eventId], references: [id], onDelete: Cascade)
   eventId   Int
   createdAt DateTime @default(now())
 }
