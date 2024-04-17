@@ -14,7 +14,8 @@ export function Hook(id) {
   const initialState = { message: null };
   const [state, editAction] = useFormState<State, FormData>(
     editEvent,
-    initialState
+    initialState,
+    
   );
 
   const [cityState, setCityState] = useState<string>('');
@@ -31,7 +32,9 @@ export function Hook(id) {
   const router = useRouter();
 
   if (state.message == "Event Updated"){
-    router.push(`/MyEvents/EditEvent/${id}`)
+
+    //revalidatePath(`/MyEvents/EditEvent/${id}`)
+    //router.push(`/MyEvents/EditEvent/${id}`)
   }
 
   return {

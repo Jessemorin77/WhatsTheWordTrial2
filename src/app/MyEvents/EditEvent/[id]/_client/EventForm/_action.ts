@@ -1,6 +1,7 @@
 "use server"
 import { db } from '~/server/db';
-import {redirect} from 'next/navigation'
+import { redirect } from 'next/navigation'
+import { revalidatePath } from 'next/cache';
 
 type State = {
   message: string | null;
@@ -15,6 +16,7 @@ export async function editEvent(prevState: State, formData: FormData) {
 
   // Conditionally adding fields to the update object if they exist
   const formFields = ["url", "title", "description", "location", "eventType", "cityState", "status", "school"];
+
   formFields.forEach(field => {
     const value = formData.get(field);
     if (value) {
@@ -25,7 +27,7 @@ export async function editEvent(prevState: State, formData: FormData) {
   //if  no fields to update
   if (Object.keys(fieldsToUpdate).length === 0) {
     console.error("No fields provided for update");
-    return{
+    return {
       message: "error"
     }; // Optionally, you might want to throw an error or return a specific response here
   }
@@ -38,15 +40,17 @@ export async function editEvent(prevState: State, formData: FormData) {
 
     console.log("PINGGGGGG")
     //manage state
-  return{
-    message: 'Event Updated'
-  }
+    revalidatePath(`/MyEvents/EditEvent/${eventId}`)
+    return {
+      message: 'Event Updated'
+      
+    }
   } catch (error) {
     // Log and handle error appropriately
     console.error("Failed to update event:", error);
-  return{
-    message: 'Error Updating Event'
-  }
+    return {
+      message: 'Error Updating Event'
+    }
 
   }
 }
