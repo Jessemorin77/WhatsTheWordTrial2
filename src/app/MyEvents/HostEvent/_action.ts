@@ -1,7 +1,7 @@
 "use server"
-import { db } from "~/server/db"
 import { getServerAuthSession } from "~/server/auth";
 import { revalidatePath } from 'next/cache'
+import { CreateEvent } from "~/data-access/CreateEvent"
 
 type State = {
   message: string | null;
@@ -12,7 +12,7 @@ export async function createEventAction(prevState: State, formData: FormData) {
   const session = await getServerAuthSession();
 
   const rawFormData = {
-    Image: formData.get("imageUrl") as string,
+    image: formData.get("imageUrl") as string,
     title: formData.get("title") as string,
     eventType: formData.get("eventType") as string,
     time: formData.get("time") as string,
@@ -29,37 +29,17 @@ export async function createEventAction(prevState: State, formData: FormData) {
         message: "FormData Null"
     }
   }
-  if(rawFormData.description == ''){
-    return{
-      message: "data undefined"
-    }
+
+  if (!rawFormData.description || !rawFormData.title || !rawFormData.eventType || !rawFormData.time || !rawFormData.cityState ) {
+    return { message: "Missing" };
   }
-  if (rawFormData) {
-    try {
-      await db.event.create({
-        data: {
-          description: rawFormData.description,
-          school: rawFormData.school,
-          eventType: rawFormData.eventType,
-          location: rawFormData.location,
-          time: rawFormData.time,
-          title: rawFormData.title,
-          image: rawFormData.Image,
-          hostId: String(session?.user.id)
-        }
-      })
-      revalidatePath('MyEvents')
-      return{
-        message: "submitted"
-      }
-    } catch (e) {
-      console.error(e)
-      return{
-        message: 'error in form submit'
-      }
-    }
+  
+  const result = await CreateEvent(rawFormData, String(session?.user.id))
+
+  if(result.success){
+    //revalidatePath('/MyEvents');
+    return { message: result.message }
+  } else {
+    return { message: result.message };
   }
-      return{
-        message: 'error in form submit'
-      }
-}
+} 

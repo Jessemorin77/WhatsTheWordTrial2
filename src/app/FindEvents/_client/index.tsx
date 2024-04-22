@@ -13,12 +13,15 @@ export default function Events() {
     setSchool,
     events,
     error,
-    handleFormSubmit
+    handleFormSubmit,
+    autoCompleteRef,
+    schoolModelRef,
+    handleReset,
   } = useEventHook(router);
 
   return (
     <div>
-      {searchEvents(handleFormSubmit, setLocation, setSchool, location, school)}
+      {searchEvents(handleFormSubmit, setLocation, setSchool, location, school, autoCompleteRef, schoolModelRef, handleReset)}
       {error && <p className="text-red-300">{error}</p>}
       {listEvents(school, events, location)}
     </div>

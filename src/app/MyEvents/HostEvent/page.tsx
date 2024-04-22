@@ -4,7 +4,7 @@ import { SchoolModel } from "~/app/_components/ui/SchoolModel";
 import { UploadButton } from "~/app/_components/utils/uploadthing";
 import { env } from "~/env";
 import { CreateEventHook } from "./Hook";
-
+import {ImageUploadComponent} from "~/app/_components/ui/ImageUploadComponent"
 export default function CreateEvent() {
   const {
     wrappedAction,
@@ -14,8 +14,11 @@ export default function CreateEvent() {
     cityState,
     setSchool,
     school,
+    setImageUrl,
     onClientUploadComplete,
     onUploadError,
+    handleImageUploadError,
+    error,
   } = CreateEventHook()
 
   return (
@@ -26,14 +29,19 @@ export default function CreateEvent() {
         <h1 className="text-4xl">Host Event</h1>
       </div>
       <div>
-        <UploadButton
-          endpoint="imageUploader"
-          onClientUploadComplete={onClientUploadComplete}
-          onUploadError={onUploadError}
-        />
+         {imageUrl ? (
+          <div>
+            <p>Image Uploaded:</p>
+            <img src={imageUrl} alt="Uploaded Event" className="w-full max-w-xs"/>
+          </div>
+        ) : (
+          <ImageUploadComponent
+            onUploadComplete={setImageUrl}
+            onUploadError={handleImageUploadError}
+          />
+        )}
         <input type="hidden" name="imageUrl" value={imageUrl} />
-        <p>ImageUrl: {imageUrl}</p>
-      </div>
+        <p>ImageUrl: {imageUrl}</p>      </div>
       <div className="mb-3">
         <label htmlFor="title" className="block text-lg">
           Title:
@@ -110,6 +118,7 @@ export default function CreateEvent() {
       {formState.error && (
         <div className="text-red-400">{formState.error}</div>
       )}
+      {error && <p className="text-red-400">{error}</p>}   
 
       <button type="submit" className="btn btn-primary mt-4 mb-10">
         Create Event
