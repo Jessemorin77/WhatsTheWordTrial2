@@ -1,5 +1,5 @@
-'use client';
-import { useState } from 'react';
+'use client'
+import { useState, useRef } from 'react';
 import { fetchEvents } from './fetchEvents';
 
 export function useEventHook(router) {
@@ -8,42 +8,51 @@ export function useEventHook(router) {
   const [events, setEvents] = useState([]);
   const [error, setError] = useState('');
 
+  const autoCompleteRef = useRef<any>(null);
+  const schoolModelRef = useRef<any>(null);
+
   const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    console.log('HandleFormSubmit: ', location);
-    console.log('School', school);
-
-    /*
-     *Possible states
-      State1: Location: str, school: null
-      State2: Location: null, school: str
-      State3: true, true
-      State4: incorrect format
-     * */
-
     if ((location && school) || (!location && !school)) {
       setError('Please fill in exactly one field');
-      setEvents([]);
-      router.push('/');
+      clearFormData();
     } else {
       try {
         const returnedEvents = await fetchEvents(school, location);
-
-        if (!returnedEvents) {
-          console.log('No Events Returned');
+        if (returnedEvents.length === 0) { // Check if the array is empty
           setError('No Events Found');
+          setEvents([]);
+          setTimeout(() => setError(''), 5000); // Clear error message after delay
+        } else {
+          setEvents(returnedEvents);
+          setError('');
         }
-
-        console.log('Returned Events', returnedEvents);
-
-        setEvents(returnedEvents);
       } catch (error) {
         console.error(error);
         setError('Failed to load events');
       }
     }
   };
+
+  const handleReset = () => {
+    setError('Form Reset');
+    clearFormData();
+  };
+
+  // Clear form data and reset input fields
+  const clearFormData = () => {
+    setEvents([]);
+    setLocation('');
+    setSchool('');
+    if (autoCompleteRef.current) {
+      autoCompleteRef.current.resetInput();
+    }
+    if (schoolModelRef.current) {
+      schoolModelRef.current.resetInput();
+    }
+    setTimeout(() => setError(''), 2000);
+  }
 
   return {
     location,
@@ -53,5 +62,9 @@ export function useEventHook(router) {
     events,
     error,
     handleFormSubmit,
+    autoCompleteRef,
+    schoolModelRef,
+    handleReset,
   };
 }
+

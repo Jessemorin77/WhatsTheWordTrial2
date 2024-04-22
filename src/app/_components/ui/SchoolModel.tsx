@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect, forwardRef, useImperativeHandle } from "react";
 import universityList from "../../../../public/us_institutions.json";
 
 interface University {
@@ -9,11 +9,10 @@ interface SchoolModelProps {
   onSchoolSelect: (institution: string) => void;
 }
 
-export function SchoolModel({ onSchoolSelect }: SchoolModelProps) {
+// Convert to a forwardRef component
+export const SchoolModel = forwardRef(({ onSchoolSelect }: SchoolModelProps, ref) => {
   const [searchTerm, setSearchTerm] = useState<string>("");
-  const [filteredUniversities, setFilteredUniversities] = useState<
-    University[]
-  >([]);
+  const [filteredUniversities, setFilteredUniversities] = useState<University[]>([]);
   const [selectedSchool, setSelectedSchool] = useState<string>("");
 
   const handleSelect = (institution: string) => {
@@ -23,12 +22,20 @@ export function SchoolModel({ onSchoolSelect }: SchoolModelProps) {
 
   useEffect(() => {
     const filtered = universityList.filter(
-      (university) =>
-        university.institution &&
-        university.institution.toLowerCase().includes(searchTerm.toLowerCase()),
+      university => university.institution &&
+        university.institution.toLowerCase().includes(searchTerm.toLowerCase())
     );
     setFilteredUniversities(filtered);
   }, [searchTerm]);
+
+  // Use useImperativeHandle to expose component methods
+  useImperativeHandle(ref, () => ({
+    resetInput: () => {
+      setSearchTerm("");
+      setSelectedSchool("");
+      onSchoolSelect("");  // Optionally clear parent component state
+    }
+  }));
 
   return (
     <div>
@@ -36,7 +43,7 @@ export function SchoolModel({ onSchoolSelect }: SchoolModelProps) {
         Schools
       </label>
 
-      <input type="checkbox" id="my_modal_6" className="modal-toggle " />
+      <input type="checkbox" id="my_modal_6" className="modal-toggle" />
 
       <div className="modal" role="dialog">
         <div className="modal-box">
@@ -46,10 +53,10 @@ export function SchoolModel({ onSchoolSelect }: SchoolModelProps) {
             id="university-search"
             className="input input-bordered"
             placeholder="Search for a university..."
+            value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
           />
-
-          <div className="max-h-48 overflow-y-auto ">
+          <div className="max-h-48 overflow-y-auto">
             {filteredUniversities.map((university, index) => (
               <div
                 key={index}
@@ -62,7 +69,6 @@ export function SchoolModel({ onSchoolSelect }: SchoolModelProps) {
               </div>
             ))}
           </div>
-
           <div className="modal-action">
             <label htmlFor="my_modal_6" className="btn">
               Close!
@@ -73,5 +79,6 @@ export function SchoolModel({ onSchoolSelect }: SchoolModelProps) {
       <h1>Selected School: {selectedSchool}</h1>
     </div>
   );
-}
+});
+
 

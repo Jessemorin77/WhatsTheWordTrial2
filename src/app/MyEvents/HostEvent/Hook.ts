@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useFormState } from 'react-dom';
 import { createEventAction } from './_action';
 import { useRouter } from 'next/navigation';
@@ -7,7 +7,7 @@ type State = {
 };
 
 export function CreateEventHook() {
-  const initialState = { message: null}
+  const initialState = { message: null }
   const [formState, wrappedAction] = useFormState<State, FormData>(
     createEventAction,
     initialState
@@ -16,38 +16,36 @@ export function CreateEventHook() {
   const [cityState, setCityState] = useState<string>('');
   const [school, setSchool] = useState<string>('');
   const [imageUrl, setImageUrl] = useState<string>('');
-
+  const [error, setError] = useState<string>('')
+  const [imageError, setImageError] = useState<string>('');
   const router = useRouter();
 
-  if (formState.message == 'submitted') {
-    console.log('Triggered^^^^^^^^^^^^^^');
-    router.push('/MyEvents');
-  }
 
-
-  const onClientUploadComplete = (res) => {
-    // Do something with the response
-    console.log('Files*****: ', res);
-    console.log('Files*****: ', res);
-    const fileData = res[0];
-
-    if (fileData && fileData.url) {
-      // Now you have the URL of the uploaded file
-      console.log('Uploaded file URL:', fileData.url);
-
-      setImageUrl(fileData.url);
-      console.log(imageUrl);
-      // Do something with the URL, e.g., store it in state or send it to another API
-    } else {
-      console.log('No URL found in the response');
+  useEffect(() => {
+    if (formState.message === 'Success') {
+      // router.push('/MyEvents');
+      setError("Event Created");
+    } else if (formState.message === 'Failed') {
+      setError("Error Creating Event Try Again")
+    } else if (formState.message === 'Missing') {
+      setError("Missing required fields")
     }
-    alert('Upload Completed');
+  }, [formState.message]);
+
+  const onClientUploadComplete = useCallback((url: string) => {
+    setImageUrl(url);
+    console.log('Image uploaded and URL set:', url);
+  }, []);
+
+  const onUploadError = useCallback((errMsg: string) => {
+    setImageError(errMsg);
+    console.error('Upload error:', errMsg);
+  }, []);
+
+  const handleImageUploadError = (errMsg) => {
+    setError(errMsg);  // Assuming setError updates the component's error state
   };
 
-  const onUploadError = (error: Error) => {
-        // Do something with the error.
-        alert(`ERROR! ${error.message}`);
-  }
 
   return {
     wrappedAction,
@@ -59,5 +57,8 @@ export function CreateEventHook() {
     school,
     onClientUploadComplete,
     onUploadError,
+    error,
+    handleImageUploadError,
+    setImageUrl,
   };
 }

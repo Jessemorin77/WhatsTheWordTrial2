@@ -1,8 +1,10 @@
 "use client"
+import React, { useRef } from "react";
 import { AutoComplete } from "~/app/_components/ui/AutoComplete";
 import { SchoolModel } from "~/app/_components/ui/SchoolModel";
 
-export default function searchEvents(handleFormSubmit, setLocation, setSchool, location, school) {
+export default function searchEvents(handleFormSubmit, setLocation, setSchool, location, school, autoCompleteRef, schoolModelRef, handleReset) {
+
   return (
     <div className="flex flex-col items-center">
       <form onSubmit={handleFormSubmit}>
@@ -11,6 +13,7 @@ export default function searchEvents(handleFormSubmit, setLocation, setSchool, l
             <p>Current Location: {location ? location : "No Location Set"}</p>
           </div>
           <AutoComplete
+            ref={autoCompleteRef}
             onPlaceSubmit={(cityState: string) => {
               setLocation(cityState)
               console.log(cityState)
@@ -23,6 +26,7 @@ export default function searchEvents(handleFormSubmit, setLocation, setSchool, l
         </div>
         <div className="mt-10">
           <SchoolModel
+            ref={schoolModelRef}
             onSchoolSelect={(institution: string) => {
               setSchool(institution)
             }}
@@ -32,6 +36,14 @@ export default function searchEvents(handleFormSubmit, setLocation, setSchool, l
         <div>
         </div>
         <div className="flex justify-end">
+          <button
+            type="reset"
+            onClick={handleReset}
+            className="rounded-2xl bg-gray-700 px-4 py-1 mt-10 text-lg mr-3"
+          >
+            Reset
+          </button>
+
           <button
             type="submit"
             className="rounded-2xl bg-gray-700 px-4 py-1 mt-10 text-lg"
