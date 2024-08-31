@@ -37,7 +37,7 @@ export async function createEventAction(prevState: State, formData: FormData) {
   const result = await CreateEvent(rawFormData, String(session?.user.id))
 
   if(result.success){
-    //revalidatePath('/MyEvents');
+    revalidatePath('/MyEvents');
     return { message: result.message }
   } else {
     return { message: result.message };

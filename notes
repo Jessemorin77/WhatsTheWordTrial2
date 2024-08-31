@@ -1,3 +1,8 @@
 Edit Profile:
 use the Upload Image Button
 do a prisma mutation with a form action for the image using the new link returned
+
+
+
+-We need to put the editing feature into the [id] of the events to make it smoother
+-Design the homepage

@@ -35,8 +35,7 @@ export default async function MyEvents() {
                     }
                   </div>
                   <div>
-                    <h1>
-                      Title:
+                    <h1 className="text-xl">
                       <span>{event.title}</span>
                     </h1>
                   </div>

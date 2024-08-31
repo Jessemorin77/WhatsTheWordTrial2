@@ -2,6 +2,7 @@ import { useState, useEffect, useCallback } from 'react';
 import { useFormState } from 'react-dom';
 import { createEventAction } from './_action';
 import { useRouter } from 'next/navigation';
+
 type State = {
   message: string | null;
 };
@@ -23,8 +24,12 @@ export function CreateEventHook() {
 
   useEffect(() => {
     if (formState.message === 'Success') {
-      // router.push('/MyEvents');
+
+      const timer = setTimeout(() => {
+        router.push('/MyEvents')
+      }, 3500)
       setError("Event Created");
+      return () => clearTimeout(timer);
     } else if (formState.message === 'Failed') {
       setError("Error Creating Event Try Again")
     } else if (formState.message === 'Missing') {
@@ -42,7 +47,7 @@ export function CreateEventHook() {
     console.error('Upload error:', errMsg);
   }, []);
 
-  const handleImageUploadError = (errMsg) => {
+  const handleImageUploadError = (errMsg: Error) => {
     setError(errMsg);  // Assuming setError updates the component's error state
   };
 

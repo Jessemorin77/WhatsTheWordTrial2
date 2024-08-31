@@ -9,7 +9,7 @@ export default async function Edit({ params }: { params: { id: number } }) {
 
   return(
     <div>
-      <ListEvent event={event}/>
+      {/*<ListEvent event={event}/>*/}
       <EventForm event={event} id={id}/>
     </div>
 )  

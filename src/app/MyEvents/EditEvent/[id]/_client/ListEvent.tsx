@@ -4,7 +4,7 @@ import Image from "next/image"
 export function ListEvent({event}){
   return(
       <div>
-        <div className="flex flex-col items-center">
+        <div className="flex flex-col items-start ml-5">
           <h1 className="text-4xl">Edit Event</h1>
         </div>
         <div className="relative w-full h-72 mt-10">

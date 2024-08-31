@@ -15,7 +15,7 @@ export async function editEvent(prevState: State, formData: FormData) {
   const fieldsToUpdate: any = {}; // Use an appropriate type instead of 'any' if possible
 
   // Conditionally adding fields to the update object if they exist
-  const formFields = ["url", "title", "description", "location", "eventType", "cityState", "status", "school"];
+  const formFields = ["image", "title", "description", "location", "eventType", "cityState", "status", "school"];
 
   formFields.forEach(field => {
     const value = formData.get(field);
@@ -38,7 +38,6 @@ export async function editEvent(prevState: State, formData: FormData) {
       data: fieldsToUpdate,
     });
 
-    console.log("PINGGGGGG")
     //manage state
     revalidatePath(`/MyEvents/EditEvent/${eventId}`)
     return {

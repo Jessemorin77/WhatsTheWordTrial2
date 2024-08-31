@@ -16,26 +16,28 @@ export function Form({ event, setCityState, setSchool, setImageUrl, onClientUplo
           }}
         />
         <div className="flex flex-col items-center">
-          <h1>New Url: {imageUrl}</h1>
-          <input value={event.id} name="id" type="hidden" />
-          <input value={imageUrl} name="url" type="hidden" />
-          <div className="flex mt-5 ">
-            <h1>Title: </h1>
+          <div>
+            <h1>New Url: {imageUrl}</h1>
+            <input value={event.id} name="id" type="hidden" />
+            <input value={imageUrl} name="image" type="hidden" />
+          </div>
+          <div className="flex flex-col justify-center items-center mt-5 ">
+            <h1 className="mr-3 ">Title: </h1>
             <input name="title" type="text" className="input" />
           </div>
-          <div className="flex mt-5">
+          <div className="flex justify-center items-center mt-5">
             <h1>Description: </h1>
             <input name="description" type="text" className="input" />
           </div>
-          <div className="flex mt-5">
+          <div className="flex justify-center items-center mt-5">
             <h1>Location: </h1>
             <input name="location" type="text" className="input" />
           </div>
-          <div className="flex mt-5">
+          <div className="flex justify-center items-center mt-5">
             <h1>Event Type: </h1>
             <input name="eventType" type="text" className="input" />
           </div>
-          <div className="flex mt-5">
+          <div className="flex justify-center items-center mt-5">
             <h1>City and State: </h1>
             <Autocomplete
               className="input input-primary"
@@ -49,11 +51,11 @@ export function Form({ event, setCityState, setSchool, setImageUrl, onClientUplo
             />
             <input name="cityState" type="hidden" value={cityState} />
           </div>
-          <div className="flex mt-5">
+          <div className="flex justify-center items-center mt-5">
             <h1>Status: </h1>
             <input name="status" type="text" className="input" />
           </div>
-          <div className="flex mt-5">
+          <div className="flex justify-center items-center mt-5">
             <h1>School: </h1>
             <SchoolModel
               onSchoolSelect={(institution: string) => {

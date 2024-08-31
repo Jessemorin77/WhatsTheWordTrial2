@@ -1,8 +1,12 @@
-'use client'
-import { useState, useRef } from 'react';
+"use client"
+import { useState, useRef, useEffect } from 'react';
 import { fetchEvents } from './fetchEvents';
+import useGeolocation from './useGeolocation';
+
+
 
 export function useEventHook(router) {
+
   const [location, setLocation] = useState<string>('');
   const [school, setSchool] = useState<string>('');
   const [events, setEvents] = useState([]);
@@ -10,6 +14,22 @@ export function useEventHook(router) {
 
   const autoCompleteRef = useRef<any>(null);
   const schoolModelRef = useRef<any>(null);
+
+  //geolocation hook
+  const { formattedAddress, error: geoError } = useGeolocation();
+  
+  useEffect(() => {
+    if(formattedAddress){
+      setLocation(formattedAddress)
+    }
+  }, [formattedAddress])
+
+  // Manage errors from both geolocation and event fetching
+  useEffect(() => {
+    if (geoError) {
+      setError(geoError);
+    }
+  }, [geoError]);
 
   const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -55,8 +75,8 @@ export function useEventHook(router) {
   }
 
   return {
-    location,
     setLocation,
+    location,
     school,
     setSchool,
     events,
