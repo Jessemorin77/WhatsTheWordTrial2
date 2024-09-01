@@ -1,29 +1,55 @@
-# Create T3 App
+# What's the Word
 
-This is a [T3 Stack](https://create.t3.gg/) project bootstrapped with `create-t3-app`.
+## Overview
+"What's the Word" is a web application enabling users to discover and create events in their area, inspired by the anonymous event promotion seen on platforms like YikYak. Built using the T3 stack (Next.js, Prisma, Tailwind, and NextAuth).
 
-## What's next? How do I make an app with this?
+## Features
+- **Event Discovery**: Search by location (city, state, or college).
+- **Event Interaction**: RSVP, chat anonymously, and leave reviews.
+- **Event Creation**: Customize events with visibility, status, and attendee tracking.
+- **User Profiles**: Customize display name and profile picture.
 
-We try to keep this project as simple as possible, so you can start with just the scaffolding we set up for you, and add additional things later when they become necessary.
+## Project Structure
+/src /app /components # Reusable components /pages # Main application pages /styles # Global styles /utils # Utility functions /api # API routes /auth # Authentication setup
 
-If you are not familiar with the different technologies used in this project, please refer to the respective docs. If you still are in the wind, please join our [Discord](https://t3.gg/discord) and ask for help.
+bash
+Copy code
 
-- [Next.js](https://nextjs.org)
-- [NextAuth.js](https://next-auth.js.org)
-- [Prisma](https://prisma.io)
-- [Drizzle](https://orm.drizzle.team)
-- [Tailwind CSS](https://tailwindcss.com)
-- [tRPC](https://trpc.io)
+## Installation
 
-## Learn More
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/Jessemorin77/WhatsTheWordTrial2.git
+   cd WhatsTheWordTrial2
+Install dependencies:
 
-To learn more about the [T3 Stack](https://create.t3.gg/), take a look at the following resources:
+bash
+Copy code
+npm install
+Set up environment variables:
 
-- [Documentation](https://create.t3.gg/)
-- [Learn the T3 Stack](https://create.t3.gg/en/faq#what-learning-resources-are-currently-available) — Check out these awesome tutorials
+Create a .env.local file and add your environment variables.
+Run the development server:
 
-You can check out the [create-t3-app GitHub repository](https://github.com/t3-oss/create-t3-app) — your feedback and contributions are welcome!
+bash
+Copy code
+npm run dev
+Open http://localhost:3000 in your browser.
 
-## How do I deploy this?
+Usage
+Creating an Event: Go to "Create Event," upload an image, and fill in details.
+Interacting with Events: RSVP, join chats, and leave reviews.
+User Profiles: Customize your profile name and picture.
+Technologies Used
+Next.js
+Prisma
+Tailwind CSS
+NextAuth
+Contributing
+Contributions are welcome! Fork the repository, create a new branch, and submit a pull request.
 
-Follow our deployment guides for [Vercel](https://create.t3.gg/en/deployment/vercel), [Netlify](https://create.t3.gg/en/deployment/netlify) and [Docker](https://create.t3.gg/en/deployment/docker) for more information.
+License
+This project is licensed under the MIT License. See the LICENSE file for details.
+
+Contact
+For inquiries, contact Jesse Morin at jessemorin77@gmail.com.
